@@ -49,13 +49,13 @@ yarn install
 
 ### Build and deployment
 
-To build the binaries for each function under `/functions`, run the following from anywhere in the repo:
+To build the binaries for each function under `functions/`, run the following from anywhere in the repo:
 
 ```bash
 yarn build
 ```
 
-To run all tests under `/functions` and `/packages`, run the following from anywhere in the repo:
+To run all tests under `functions/` and `packages/`, run the following from anywhere in the repo:
 
 ```bash
 yarn test
