@@ -6,6 +6,12 @@ This template enables you to write [AWS Lambda functions](https://github.com/tjm
 
 This model is appropriate for users happy to trade-off package versioning for the gain of tighter development cycles. Other pros/cons of Monorepos can be found [here](https://medium.com/better-programming/the-pros-and-cons-monorepos-explained-f86c998392e1).
 
+### How to use
+
+Functions that you would like to be deployed should be written as individual Go packages unders `functions/`.
+
+Code that you wish to share between functions should be written as Go packages under `packages/`.
+
 ## Tools involved
 
 ### [AWS Lambda](http://aws.amazon.com/)
