@@ -20,12 +20,12 @@ build() {
     cd $CURR_DUR
 }
 
-declare -a DIRS_WITH_TESTS=("functions" "packages")
+DIRS_WITH_TESTS=("functions" "packages")
 
 test() {
     failures=0
     
-    for dir_with_tests in $DIRS_WITH_TESTS; do
+    for dir_with_tests in "${DIRS_WITH_TESTS[@]}"; do
 	    for path in $PROJECT_DIR/$dir_with_tests/* ; do
             if [ -d "$path" ]; then
                 echo "Testing in $path"

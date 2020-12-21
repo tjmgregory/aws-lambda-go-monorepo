@@ -1,3 +1,3 @@
-module theodo.red/creditcompanion/packages/logging
+module exampleproject/packages/logging
 
 go 1.15

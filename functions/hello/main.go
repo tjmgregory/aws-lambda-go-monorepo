@@ -2,8 +2,10 @@ package main
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
+	"fmt"
+
+	"exampleproject/packages/logging"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -13,21 +15,23 @@ import (
 // AWS Lambda Proxy Request functionality (default behavior)
 //
 // https://serverless.com/framework/docs/providers/aws/events/apigateway/#lambda-proxy-integration
-type Response events.APIGatewayProxyResponse
 
 // Handler is our lambda handler invoked by the `lambda.Start` function call
-func Handler(ctx context.Context) (Response, error) {
+func Handler(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	logger := new(logging.Logger)
+	logger.LogDebug(fmt.Sprintf("%s %s", req.HTTPMethod, req.Resource))
+
 	var buf bytes.Buffer
 
 	body, err := json.Marshal(map[string]interface{}{
 		"message": "Go Serverless v1.0! Your function executed successfully!",
 	})
 	if err != nil {
-		return Response{StatusCode: 404}, err
+		return events.APIGatewayProxyResponse{StatusCode: 404}, err
 	}
 	json.HTMLEscape(&buf, body)
 
-	resp := Response{
+	resp := events.APIGatewayProxyResponse{
 		StatusCode:      200,
 		IsBase64Encoded: false,
 		Body:            buf.String(),
