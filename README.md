@@ -10,7 +10,7 @@ This model is appropriate for users happy to trade-off package versioning for th
 
 ### [AWS Lambda](http://aws.amazon.com/)
 
-Where we shall deploy the serverless functions that are declared in `/functions`.
+Where we shall deploy the serverless functions that are declared in `functions/`.
 
 ### [Go](https://golang.org)
 
@@ -28,7 +28,7 @@ CI steps included on each push to ensure tests are always passing. Configurable 
 
 To use Serverless and for easier deployment scripting.
 
-`go.mod` files do not support string building, thus linking local modules at build time is not possible from a root directory. To circument this, as can be seen in `/build.sh`, we must change directory into each funciton/package in turn.
+`go.mod` files do not support string building, thus linking local modules at build time is not possible from a root directory. To circument this, as can be seen in `build.sh`, we must change directory into each funciton/package in turn.
 
 ## Setup
 
