@@ -1,42 +1,68 @@
-# Credit Companion
+# AWS Lambda Go Monorepo Template
 
-TrueLayer, Barclaycard &amp; Monzo integration to maintain a pot within Monzo equal to your current credit card balance.
+Having setup such an environment for [Credit Companion](https://github.com/tjmgregory/credit-companion), I felt others may benefit from such a setup.
 
-## Inspiriation
+This template enables you to write [AWS Lambda functions](https://github.com/tjmgregory/credit-companion) in [Go](https://golang.org/) which can share packages without the need to host each package in its own seperate repository.
 
-As a young person, I'm told repeateadly by elders that the wisest thing I should focus on right now is getting an excellent credit score, so that when (if ever!) I'm in the market to buy a house, the banks will provide me a real good loan 🏦
+This model is appropriate for users happy to trade-off package versioning for the gain of tighter development cycles. Other pros/cons of Monorepos can be found [here](https://medium.com/better-programming/the-pros-and-cons-monorepos-explained-f86c998392e1).
 
-A key component in building your score is ensuring that you **do not miss a payment**.
+## Tools involved
 
-Now, clearly, to do this, you must have the money to pay off your statement. Yet the purpose of a credit card is to pay with money that you don't yet have. *hmmmm* 🤔
+### [AWS Lambda](http://aws.amazon.com/)
 
-My ideal scenario is if I could treat my credit card like my debit card, then I would never over-spend, and will have the moeny to pay off my bill each month and build that score!
+Where we shall deploy the serverless functions that are declared in `/functions`.
 
-So spawns this tool - designed to maintain a pot within your Monzo account (with scope to expand to other banks/money holders) that holds the current statement balance of your credit card(s).
+### [Go](https://golang.org)
 
-## Designs
+A friendlier C with much of the power.
 
-RFCs documenting the design of the system can be found [here](https://drive.google.com/drive/folders/1F2I1wrt-ktIohBFUH62Ygdfm_BEbKWOf?usp=sharing).
+### [Serverless](https://www.serverless.com/)
 
-## Tools
+Deployment tool which streamlines deploying a function to AWS. Configurable with `serverless.yml`.
 
-- AWS (Amazon Web Services) http://aws.amazon.com/
-- AWS Lambda http://aws.amazon.com/
-- Amazon DynamoDB http://aws.amazon.com/
-- Go https://golang.org
-- TrueLayer Data API https://truelayer.com/data-api/
-- Monzo API https://docs.monzo.com/
+### [Github Actions](https://github.com/features/actions)
+
+CI steps included on each push to ensure tests are always passing. Configurable with `.github/workflows/go.yml`
+
+### [Node](https://nodejs.org/en/) & [Yarn](https://yarnpkg.com/)
+
+To use Serverless and for easier deployment scripting.
+
+`go.mod` files do not support string building, thus linking local modules at build time is not possible from a root directory. To circument this, as can be seen in `/build.sh`, we must change directory into each funciton/package in turn.
 
 ## Setup
 
-To build the binaries for deployment, run the following:
+### Requirements
 
+- [NVM](https://github.com/nvm-sh/nvm)
+- [An AWS account](http://aws.amazon.com/)
+- [AWS CLI](http://aws.amazon.com/cli/) configured [with access to your AWS account](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
+- [Go](https://golang.org/doc/install)
+
+For first time setup, run the following within the project root:
+
+```bash
+nvm use
+npm install -g yarn
+yarn install
 ```
+
+### Build and deployment
+
+To build the binaries for each function under `/functions`, run the following from anywhere in the repo:
+
+```bash
 yarn build
+```
+
+To run all tests under `/functions` and `/packages`, run the following from anywhere in the repo:
+
+```bash
+yarn test
 ```
 
 To deploy your built binaries to AWS, run the following:
 
-```
+```bash
 yarn deploy
 ```
